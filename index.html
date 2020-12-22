@@ -31,7 +31,7 @@
           ctx.strokeStyle = "black"
           ctx.stroke();
           start += randomLength;
-          let l = new lead(start, c.height/2, randomLength, 0);
+          let l = new lead(start, c.height/2, randomLength);
           leadPieces.push(l);
         },
         breakOff: () => {
@@ -39,7 +39,7 @@
           minLength -= 1, maxLength -= 1;
         }
       }
-      
+
       body.onclick = () => {
         if (start > c.width) {
           leadMechanics.breakOff();
