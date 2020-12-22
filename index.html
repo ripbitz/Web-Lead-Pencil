@@ -17,11 +17,17 @@
       let start = 5;
       let end;
       body.onclick = () => {
-        ctx.beginPath();
-        ctx.rect(start, c.height/2, 30, 0);
-        ctx.strokeStyle = "white"
-        ctx.stroke();
-        start += 30;
+        if (start > c.width) {
+          ctx.clearRect(0,0,c.width,c.height);
+          start = 5;
+        } else {
+          ctx.beginPath();
+          ctx.rect(start, c.height/2, 30, 0);
+          ctx.strokeStyle = "white"
+          ctx.stroke();
+          start += 30;
+        }
+        
         console.log("Button Clicked");
       };
     </script>
