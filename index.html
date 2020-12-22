@@ -14,8 +14,7 @@
       c.style.height = window.innerHeight + "px";
 
       // Mechanics
-      let start = 5;
-      let end;
+      let start = 5, end;
       let minLength = 5, maxLength = 30;
       body.onclick = () => {
         let randomLength = Math.random() * (maxLength - minLength) + minLength;
@@ -24,7 +23,7 @@
           start = 5;
         } else {
           ctx.beginPath();
-          ctx.rect(start, c.height/2, 30, 0);
+          ctx.rect(start, c.height/2, randomLength, 0);
           ctx.strokeStyle = "black"
           ctx.stroke();
           start += randomLength;
