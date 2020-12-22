@@ -5,19 +5,25 @@
 		<link href='styles.css' rel='stylesheet'>
 	</head>
 	<body id='body'>
-    <canvas id='my-canvas'></canvas>
-      
+    <canvas id='canvas'></canvas>
     <script>
-      var can = document.getElementById("my-canvas");
+      // Canvas
+      let c = document.getElementById("canvas");
+      let ctx = c.getContext('2d');
+      c.style.width = window.innerWidth + "px";
+      c.style.height = window.innerHeight + "px";
 
-      can.style.width = window.innerWidth + "px";
-      can.style.height = window.innerHeight + "px";
-
-
+      // Mechanics
+      let start = 5;
+      let end;
       body.onclick = () => {
+        ctx.beginPath();
+        ctx.rect(start, c.height/2, 30, 0);
+        ctx.strokeStyle = "white"
+        ctx.stroke();
+        start += 30;
         console.log("Button Clicked");
       };
-
     </script>
 	</body>
 </html>
