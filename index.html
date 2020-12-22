@@ -16,12 +16,15 @@
       // Mechanics
       let start = 5;
       let end;
+      let minLength = 5, maxLength = 30;
       body.onclick = () => {
+        let randomLength = Math.random() * (maxLength - minLength) + minLength;
         ctx.beginPath();
-        ctx.rect(start, c.height/2, 30, 0);
-        ctx.strokeStyle = "white"
+        ctx.strokeStyle = "black"
+        ctx.rect(start, c.height/2, randomLength, 0);
         ctx.stroke();
-        start += 30;
+        start += randomLength;
+        ctx.endPath();
         console.log("Button Clicked");
       };
     </script>
