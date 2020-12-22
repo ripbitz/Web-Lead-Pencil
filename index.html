@@ -5,6 +5,13 @@
 		<link href='styles.css' rel='stylesheet'>
 	</head>
 	<body>
-  	<canvas width='3840px' height='1400px'></canvas>
+    <canvas id='my-canvas'></canvas>
+      
+    <script>
+      var can = document.getElementById("my-canvas");
+
+      can.style.width = window.innerWidth + "px";
+      can.style.height = window.innerHeight + "px";
+    </script>
 	</body>
 </html>
