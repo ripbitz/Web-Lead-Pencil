@@ -4,7 +4,7 @@
 		<title>WebLeadPencil</title>
 		<link href='styles.css' rel='stylesheet'>
 	</head>
-	<body>
+	<body id='body'>
     <canvas id='my-canvas'></canvas>
       
     <script>
@@ -12,6 +12,12 @@
 
       can.style.width = window.innerWidth + "px";
       can.style.height = window.innerHeight + "px";
+
+
+      body.onclick = () => {
+        console.log("Button Clicked");
+      };
+
     </script>
 	</body>
 </html>
