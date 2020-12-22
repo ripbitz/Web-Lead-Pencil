@@ -14,22 +14,42 @@
       c.style.height = window.innerHeight + "px";
 
       // Mechanics
-      let start = 5, end;
-      let minLength = 5, maxLength = 30;
-      body.onclick = () => {
-        let randomLength = Math.random() * (maxLength - minLength) + minLength;
-        if (start > c.width) {
-          ctx.clearRect(0,0,c.width,c.height);
-          start = 5;
-        } else {
-          ctx.beginPath();
+      let start = 5;
+      let minLength = 10, maxLength = 30;
+      
+      function lead(x, y, size){
+        this.x = x;
+        this.y = y;
+        this.size = size;
+      }
+
+      let leadPieces = [];
+      const leadMechanics = {
+        draw: () => {
+          let randomLength = Math.random() * (maxLength - minLength) + minLength;
           ctx.rect(start, c.height/2, randomLength, 0);
           ctx.strokeStyle = "black"
           ctx.stroke();
           start += randomLength;
+          let l = new lead(start, c.height/2, randomLength, 0);
+          leadPieces.push(l);
+        },
+        breakOff: () => {
+          leadPieces.pop();
+          minLength -= 1, maxLength -= 1;
         }
-        ctx.endPath();
+      }
+      
+      body.onclick = () => {
+        if (start > c.width) {
+          leadMechanics.breakOff();
+          leadMechanics.draw();
+        } else {
+          leadMechanics.draw();
+        }
+
         console.log("Button Clicked");
+        console.log(leadPieces);
       };
     </script>
 	</body>
