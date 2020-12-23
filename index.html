@@ -1,56 +1,16 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>WebLeadPencil</title>
-		<link href='styles.css' rel='stylesheet'>
+		<title>Web Lead Pencil</title>
+    <link href='styles.css' rel='stylesheet'>
 	</head>
 	<body id='body'>
+    <div>
+      <h1>Welcome to the Web Lead Pencil</h1>
+      <label id='clickCounter'></label><br/>
+      <label id='gameOverMessage'></label>
+    </div>
     <canvas id='canvas'></canvas>
-    <script>
-      // Canvas
-      let c = document.getElementById("canvas");
-      let ctx = c.getContext('2d');
-      c.style.width = window.innerWidth + "px";
-      c.style.height = window.innerHeight + "px";
-
-      // Mechanics
-      let start = 5;
-      let minLength = 10, maxLength = 30;
-      
-      function lead(x, y, size){
-        this.x = x;
-        this.y = y;
-        this.size = size;
-      }
-
-      let leadPieces = [];
-      const leadMechanics = {
-        draw: () => {
-          let randomLength = Math.random() * (maxLength - minLength) + minLength;
-          ctx.rect(start, c.height/2, randomLength, 0);
-          ctx.strokeStyle = "black"
-          ctx.stroke();
-          start += randomLength;
-          let l = new lead(start, c.height/2, randomLength);
-          leadPieces.push(l);
-        },
-        breakOff: () => {
-          leadPieces.pop();
-          minLength -= 1, maxLength -= 1;
-        }
-      }
-
-      body.onclick = () => {
-        if (start > c.width) {
-          leadMechanics.breakOff();
-          leadMechanics.draw();
-        } else {
-          leadMechanics.draw();
-        }
-
-        console.log("Button Clicked");
-        console.log(leadPieces);
-      };
-    </script>
-	</body>
+  </body>
+  <script src='script.js' type="application/javascript"></script>
 </html>
