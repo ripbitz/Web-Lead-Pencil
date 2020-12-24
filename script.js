@@ -122,7 +122,7 @@ const mechanics = {
       mechanics.END_REACHED = true;
       if(mechanics.END_REACHED){
         mechanics.BREAK_SOUND_EFFECT.play();
-        let randomBreakPoint = Math.random() * (leadPieces.length - 1) + 1;
+        let randomBreakPoint = Math.random() * (leadPieces.length - 3) + 3;
         mechanics.removeLead(randomBreakPoint);
         mechanics.END_REACHED = false;
         if(!ENDLESS_MODE){
