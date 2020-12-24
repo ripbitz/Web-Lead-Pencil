@@ -28,24 +28,32 @@
   drawLeadPencil: () => {
     // Body
     ctx.beginPath();
-    ctx.shadowBlur = 5;
-    ctx.shadowOffsetX = 2;
-    ctx.shadowOffsetY = 2;
-    ctx.shadowColor = "#404040";
+    ctx.shadowBlur = 6;
+    ctx.shadowOffsetX = 3;
+    ctx.shadowOffsetY = 3;
+    ctx.shadowColor = '#404040';
     ctx.rect(0, c.height/2, 200, 20);
-    ctx.fillStyle = "#8B0000";
+    ctx.fillStyle = '#8B0000';
     ctx.fill();
     ctx.closePath();
 
     // Tip
-    ctx.fillStyle = "#C0C0C0";
+    ctx.fillStyle = '#C0C0C0';
     ctx.beginPath();
     ctx.moveTo(200, c.height/2);
     ctx.lineTo(200, c.height/2 + 20);
     ctx.lineTo(275, c.height/2 + 10);
-    ctx.fillStyle = "#C0C0C0";
+    ctx.fillStyle = '#C0C0C0';
     ctx.fill();
     ctx.closePath();
+
+    // Clip
+    ctx.fillStyle = '#C0C0C0';
+    ctx.beginPath();
+    ctx.rect(0, c.height/2-15, 30, 6);
+    ctx.fill();
+    ctx.closePath();
+
   },
 
   // Lead attributes
@@ -100,31 +108,35 @@
     return mechanics.MIN_SIZE === 0 && mechanics.MAX_SIZE === 0
   },
 
-  // Body on click
-  bodyOnClick: () => {
-    body.onclick = () => {
-      if(mechanics.START_POINT >= c.width){ 
-        mechanics.END_REACHED = true;
-        if(mechanics.END_REACHED){
-          let randomBreakPoint = Math.random() * (leadPieces.length - 1) + 1;
-          mechanics.removeLead(randomBreakPoint);
-          mechanics.END_REACHED = false;
-          if(mechanics.MAX_SIZE  > 1){ mechanics.MAX_SIZE -= 1; }
-          if(mechanics.MIN_SIZE > 1 ){ mechanics.MIN_SIZE -= 1; }
-          if(mechanics.GAME_OVER()){
-            let gameOverMessage = document.getElementById('gameOverMessage');
-            gameOverMessage.textContent = "YOU ARE OUT OF LEAD :( Press 'R' to restart";
-          }
+  // Audio sound effects
+  CLICK_SOUND_EFFECT: new Audio('click.mp3'),
+  BREAK_SOUND_EFFECT: new Audio('break.mp3'),
+
+  // method to push lead
+  pushLead: () => {
+    if(mechanics.START_POINT >= c.width){ 
+      mechanics.END_REACHED = true;
+      if(mechanics.END_REACHED){
+        mechanics.BREAK_SOUND_EFFECT.play();
+        let randomBreakPoint = Math.random() * (leadPieces.length - 1) + 1;
+        mechanics.removeLead(randomBreakPoint);
+        mechanics.END_REACHED = false;
+        if(mechanics.MAX_SIZE  > 1){ mechanics.MAX_SIZE -= 5; }
+        if(mechanics.MIN_SIZE > 1 ){ mechanics.MIN_SIZE -= 5; }
+        if(mechanics.GAME_OVER()){
+          let gameOverMessage = document.getElementById('gameOverMessage');
+          gameOverMessage.textContent = "YOU ARE OUT OF LEAD :( Press 'R' to restart";
         }
-      } 
-      else {
-        if(!mechanics.END_REACHED && !mechanics.GAME_OVER()){
-          mechanics.addLead();
-          clickCounter.textContent = '';
-          clickCounter.textContent = "Lead Clicked: " + cc;
-          cc++;
-        }  
       }
+    } 
+    else {
+      if(!mechanics.END_REACHED && !mechanics.GAME_OVER()){
+        mechanics.CLICK_SOUND_EFFECT.play();
+        mechanics.addLead();
+        clickCounter.textContent = '';
+        clickCounter.textContent = "Lead Clicked: " + cc;
+        cc++;
+      }  
     }
   },
 }
@@ -134,6 +146,8 @@
    ctx.clearRect(0,0, c.width, c.height);
    mechanics.drawLeadPencil();
    mechanics.drawLead();
-   mechanics.bodyOnClick();
+   body.onclick = () => {
+     mechanics.pushLead();
+  }
    c.req = requestAnimationFrame(loop);
  }
