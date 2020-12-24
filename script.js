@@ -194,11 +194,7 @@ function loop(){
   mechanics.resize();
   mechanics.drawLeadPencil();
   mechanics.drawLead();
-  body.onclick = () => {
-    mechanics.pushLead();
-  }
-  if(AUTO_MODE){
-    mechanics.pushLead();
-  }
+  body.onclick = () => { mechanics.pushLead(); }
+  if(AUTO_MODE){ mechanics.pushLead(); }
   c.req = requestAnimationFrame(loop);
 }
