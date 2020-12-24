@@ -108,7 +108,7 @@
     return mechanics.MIN_SIZE === 0 && mechanics.MAX_SIZE === 0
   },
 
-  // Audio sound effects
+  // Audio sound effect files
   CLICK_SOUND_EFFECT: new Audio('click.mp3'),
   BREAK_SOUND_EFFECT: new Audio('break.mp3'),
 
@@ -125,7 +125,8 @@
         if(mechanics.MIN_SIZE > 1 ){ mechanics.MIN_SIZE -= 5; }
         if(mechanics.GAME_OVER()){
           let gameOverMessage = document.getElementById('gameOverMessage');
-          gameOverMessage.textContent = "YOU ARE OUT OF LEAD :( Press 'R' to restart";
+          gameOverMessage.textContent = "YOU ARE OUT OF LEAD :(";
+          mechanics.reset();
         }
       }
     } 
@@ -139,13 +140,39 @@
       }  
     }
   },
+
+  reset: () => {
+    leadPieces = [];
+    mechanics.START_POINT = 273;
+    mechanics.MIN_SIZE = 10;
+    mechanics.MAX_SIZE = 30;
+    clickCounter.textContent = "";
+    cc = 0;
+    gameOverMessage.textContent = "";
+  }
 }
 
  c.req = requestAnimationFrame(loop);
+
+ // Keyboard event listeners to push lead and reset the game
+document.addEventListener("keydown", keyDownHandler);
+function keyDownHandler(event) {
+  switch (event.code) {
+    case "Space":
+      mechanics.pushLead();
+      break;
+    case "KeyR":
+      mechanics.reset();
+      break;
+  }
+}
+
  function loop(){
    ctx.clearRect(0,0, c.width, c.height);
    mechanics.drawLeadPencil();
    mechanics.drawLead();
+   // Auto mode (uncomment below)
+   //mechanics.pushLead();
    body.onclick = () => {
      mechanics.pushLead();
   }
